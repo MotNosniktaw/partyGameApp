@@ -1,10 +1,8 @@
-const socket = require("socket.io");
 const NodeCache = require("node-cache");
 const { uuid } = require("uuidv4");
 const cache = new NodeCache();
 
-function intialiseWhiteboard(server) {
-  const io = socket(server);
+function intialiseWhiteboard(io) {
   io.on("connection", (socket) => {
     console.log("a user connected");
     socket.on("paint", (data) => {
@@ -25,4 +23,4 @@ function intialiseWhiteboard(server) {
   });
 }
 
-module.exports = intialiseWhiteboard;
+module.exports = { intialiseWhiteboard };
