@@ -299,6 +299,23 @@
           clearBoard();
         });
 
+        $("#save").click(function () {
+          var drawing = $.parseHTML($("#board")[0].innerHTML);
+          var data = [];
+          drawing.map((row) => {
+            let rowData = [];
+            var parsedRow = $.parseHTML(row.innerHTML);
+            parsedRow.map((cell) => {
+              rowData.push(cell.style.backgroundColor ?? "");
+            });
+            data.push(rowData);
+          });
+          console.log({data})  
+          socket.emit("save", {
+            data
+          });
+        })
+
         socket.on("done", function ({ key, target, sub }) {
           if (target === $("#name").val() || target == "") {
             var newQueuedItem = document.createElement("div");
